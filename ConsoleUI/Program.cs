@@ -15,10 +15,10 @@ namespace ConsoleUI
 
             carManager.Add(new Car()
             {
-                BrandId = 3,
+                BrandId = 4,
                 ColorId = 1,
-                DailyPrice = 450,
-                Description = "BMW",
+                DailyPrice = 600,
+                Description = "Vista",
                 ModelYear = "2018"
 
             });
@@ -39,9 +39,9 @@ namespace ConsoleUI
             //    Id = 1004
             //});
 
-            foreach (var item in carManager.GetAll())
+            foreach (var item in carManager.GetCarDetails())
             {
-                Console.WriteLine(item.Description);
+                Console.WriteLine(item.CarName+ " "+ item.BrandName+" "+ item.ColorName+" "+ item.DailyPrice);
             }
 
         }
