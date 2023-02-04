@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -19,15 +21,16 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car entity)
+        public IResult Add(Car entity)
         {
-            if (entity.Description.Length>=2 && entity.DailyPrice>0)
+            if (entity.Description.Length>2)
             {
                  _carDal.Add(entity);
+                return new SuccessResult(Messages.CarAdded);
             }
             else
             {
-                Console.WriteLine("Araba özelliklerini yanlış girdiniz"); 
+                return new ErrorResult(Messages.CarNameInvalid);
             }
         }
 
