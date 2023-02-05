@@ -33,6 +33,14 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+        public TEntity Get(Expression<Func<TEntity, bool>> filter)
+        {
+            using (TContext context = new TContext())
+            {
+                return context.Set<TEntity>().FirstOrDefault(filter);
+            }
+        }
+
         public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
             using (TContext context = new TContext())
@@ -74,6 +82,7 @@ namespace Core.DataAccess.EntityFramework
                 var updatedEntity = context.Entry(entity);
                 updatedEntity.State = EntityState.Modified;
                 context.SaveChanges();
+
             }
         }
     }

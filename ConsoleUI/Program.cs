@@ -11,6 +11,8 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             CarManager carManager = new CarManager(new EfCarDal());
+            UserManager userManager = new UserManager(new EfUserDal());
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
             //AddCar(carManager);
 
             //UpdateCar(carManager);
@@ -18,36 +20,63 @@ namespace ConsoleUI
 
             //DeleteCar(carManager);
 
-
-
-
-
-            foreach (var item in carManager.GetCarDetails())
+            //AddUser(userManager);
+            var result = rentalManager.Add(new Rental()
             {
-                Console.WriteLine(item.CarName + " " + item.BrandName + " " + item.ColorName + " " + item.DailyPrice);
-            }
+                CarId=3,
+                CustomerId=1,
+                RentDate=DateTime.Now
+                
+            });
+            Console.WriteLine(result.Message);
 
+
+
+
+
+
+            //foreach (var item in carManager.GetCarDetails().Data)
+            //{
+            //    Console.WriteLine(item.CarName + " " + item.BrandName + " " + item.ColorName + " " + item.DailyPrice);
+
+            //}
+            //Console.WriteLine(carManager.GetCarDetails().Message);
+
+        }
+
+        private static void AddUser(UserManager userManager)
+        {
+            var result = userManager.Add(new User()
+            {
+                FirstName = "Ceren",
+                Lastname = "Saldıran",
+                Email = "cerensaldirann@gmail.com",
+                Password = "123456"
+            });
+            Console.WriteLine(result.Message);
         }
 
         private static void DeleteCar(CarManager carManager)
         {
-            carManager.Delete(new Car()
+            var result= carManager.Delete(new Car()
             {
-                Id = 1004
+                Id = 1008
             });
+            Console.WriteLine(result.Message);
         }
 
         private static void UpdateCar(CarManager carManager)
         {
-            carManager.Update(new Car()
+            var result= carManager.Update(new Car()
             {
-                Id = 1,
+                Id = 1007,
                 BrandId = 2,
-                ColorId = 1,
+                ColorId =5,
                 DailyPrice = 450,
                 Description = "Audi",
-                ModelYear = "2010"
+                ModelYear = "2012"
             });
+            Console.WriteLine(result.Message);
         }
 
         private static void AddCar(CarManager carManager)
