@@ -2,6 +2,9 @@
 using Business.BusinessAspect.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac.Caching;
+using Core.Aspect.Autofac.Performance;
+using Core.Aspect.Autofac.Transaction;
 using Core.Aspect.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
@@ -25,10 +28,9 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        [SecuredOperation("car.add, admin")]
-
+        [SecuredOperation("entity.add, admin")]
         [ValidationAspect(typeof(CarValidator))]
-
+        [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Car entity)
         {
 
@@ -44,6 +46,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarDeleted);
         }
 
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             if (DateTime.Now.Hour==17)
@@ -71,14 +74,31 @@ namespace Business.Concrete
             return new SuccessDataResult<List< Car >>( _carDal.GetAll(c=>c.ColorId==id));
         }
 
+        [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("IProductService.Get")]
         public IResult Update(Car entity)
         {
              _carDal.Update(entity);
             return new SuccessResult(Messages.CarUpdated);
         }
+
+        [CacheAspect]
+        [PerformanceAspect(5)]
         public IDataResult<Car> GetById(int id)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
+        }
+
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Car entity)
+        {
+            Add(entity);
+            if (entity.DailyPrice<500)
+            {
+                throw new Exception("");
+            }
+            Add(entity);
+            return null;
         }
     }
 }
