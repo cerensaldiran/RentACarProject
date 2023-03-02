@@ -64,14 +64,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(),Messages.CarsListed);
         }
 
-        public IDataResult<List<Car>> GetCarsByBrandId(int id)
+        public IDataResult<List<CarDetailDto>> GetCarsByBrandId(int id)
         {
-            return new SuccessDataResult<List<Car>> (_carDal.GetAll(c=>c.BrandId==id));
+            return new SuccessDataResult<List<CarDetailDto>> (_carDal.GetCarDetails().Where(p=>p.BrandId==id).ToList());
         }
 
-        public IDataResult<List<Car>> GetCarsByColorId(int id)
+        public IDataResult<List<CarDetailDto>> GetCarsByColorId(int id)
         {
-            return new SuccessDataResult<List< Car >>( _carDal.GetAll(c=>c.ColorId==id));
+            return new SuccessDataResult<List< CarDetailDto >>( _carDal.GetCarDetails().Where(c=>c.ColorId==id).ToList());
         }
 
         [ValidationAspect(typeof(CarValidator))]
@@ -83,10 +83,10 @@ namespace Business.Concrete
         }
 
         [CacheAspect]
-        [PerformanceAspect(5)]
-        public IDataResult<Car> GetById(int id)
+        //[PerformanceAspect(5)]
+        public IDataResult<List<CarDetailDto>> GetById(int id)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails().Where(c => c.CarId == id).ToList());
         }
 
         [TransactionScopeAspect]
