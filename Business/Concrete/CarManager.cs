@@ -100,5 +100,11 @@ namespace Business.Concrete
             Add(entity);
             return null;
         }
+
+        public IDataResult<List<CarDetailDto>> GetCarsByColorandBrandId(int colorId, int brandId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails().Where(c => c.ColorId == colorId && c.BrandId==brandId).ToList());
+
+        }
     }
 }
