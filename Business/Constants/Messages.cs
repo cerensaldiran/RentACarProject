@@ -53,6 +53,8 @@ namespace Business.Constants
         public static string UserListed = "Kullanıcılar listelendi.";
 
 
+        public static string CarIsAlreadyRentedInSelectedDate = "Bu araba zaten seçilen tarih aralığında kiralandıBu araba zaten seçilen tarih aralığında kiralandı.";
+        public static string CarDateError = "Teslim tarihi kiralama tarihinden önce seçilemez!";
 
 
 

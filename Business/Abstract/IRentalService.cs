@@ -16,5 +16,6 @@ namespace Business.Abstract
         IResult Delete(Rental entity);
         IDataResult<List<Rental>> GetAll();
         IDataResult<List<RentalDetailDto>> GetRentalDetails();
+        //IResult RulesForAdding(Rental entity);
     }
 }
