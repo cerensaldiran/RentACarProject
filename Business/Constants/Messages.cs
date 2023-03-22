@@ -57,6 +57,12 @@ namespace Business.Constants
         public static string CarDateError = "Teslim tarihi kiralama tarihinden önce seçilemez!";
 
 
+        public static string CardAdded = "Kart Eklendi.";
+        public static string CardDeleted= "Kart Silindi";
+        public static string SuccessfullPay = "Ödeme Başarılı";
+        public static string CardInformationIsIncorrect = "Kart bilgileri Yanlış";
+
+
 
     }
 }
